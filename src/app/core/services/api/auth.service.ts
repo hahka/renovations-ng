@@ -24,7 +24,6 @@ export class AuthService {
             .post<{ accessToken: string }>(`${this.environmentService.apiUrl}auth/signin`, { login, password })
             .pipe(switchMap(response => {
                 this.accessToken = response.accessToken;
-                console.log(this.accessToken);
                 return of(response);
             }));
     }

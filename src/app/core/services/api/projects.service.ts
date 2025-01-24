@@ -14,6 +14,6 @@ export class ProjectsService extends ApiService<Project> {
   };
 
   idbSearch(data: Project, keyword: string): boolean {
-    return data.name.toUpperCase().indexOf(keyword.toUpperCase()) !== -1;
+    return data.label.toUpperCase().indexOf(keyword.toUpperCase()) !== -1;
   }
 }

@@ -1,0 +1,50 @@
+<div class="page-header">
+  <!-- Left cell: back button and title -->
+  <div class="page-header__content">
+    <button
+      *ngIf="!forList"
+      mat-mini-fab
+      class="btn-back mat-elevation-z"
+      color="white"
+      (click)="onClick(PageHeaderAction.BACK)"
+    >
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span class="page-header__title">{{ title }}</span>
+  </div>
+  <div class="buttons-wrapper buttons-wrapper--end" *ngIf="forList">
+    <ng-container *ngTemplateOutlet="buttonsTemplate"></ng-container>
+  </div>
+  <ng-container *ngIf="!forList">
+    <ng-container *ngTemplateOutlet="buttonsTemplate"></ng-container>
+    <div class="buttons-wrapper buttons-wrapper--end" *ngIf="displayCrudBtn">
+      <div *ngIf="readonly && online">
+        <button mat-stroked-button color="primary" (click)="onClick(PageHeaderAction.UPDATE)">
+          {{ 'common.action.update' | translate }}
+        </button>
+      </div>
+      <div *ngIf="!readonly" class="buttons-container">
+        <!-- <ng-container *ngIf="displayArchive">
+        <button mat-stroked-button color="warn" (click)="onClick(PageHeaderAction.ARCHIVE)">
+          {{ isArchived ? 'common.action.unarchive' : ('common.action.archive' | translate) }}
+        </button>
+      </ng-container> -->
+
+        <button mat-stroked-button color="primary" (click)="onClick(PageHeaderAction.CANCEL)">
+          {{ 'common.action.cancel' | translate }}
+        </button>
+        <button
+          mat-flat-button
+          color="primary"
+          class="btn--size-l"
+          [disabled]="(control && !control.valid) || !!isArchived"
+          (click)="onClick(PageHeaderAction.SAVE)"
+        >
+          {{ 'common.action.save' | translate }}
+        </button>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #buttonsTemplate><ng-content select="[buttons]"></ng-content></ng-template>
+</div>

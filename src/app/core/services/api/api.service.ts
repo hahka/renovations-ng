@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable, InjectionToken } from '@angular/core';
 import { from, Observable } from 'rxjs';
 import { pluck, take } from 'rxjs/operators';
@@ -12,7 +12,7 @@ import { Project } from '../../../shared/models/project.model';
 
 export const WINDOW = new InjectionToken<Window>('WindowToken', {
   factory: () => {
-    if(typeof window !== 'undefined') {
+    if (typeof window !== 'undefined') {
       return window
     }
     return new Window(); // does this work?
@@ -23,8 +23,7 @@ export const WINDOW = new InjectionToken<Window>('WindowToken', {
   providedIn: 'root',
 })
 export abstract class ApiService<
-    T extends Project
-  //T extends Product | Market | MarketSales
+  T extends Project
 > extends ResourceUrlHelper {
   /** API base endpoint for resource */
   abstract override resource: IdbStoresEnum;
@@ -118,14 +117,28 @@ export abstract class ApiService<
    */
   public search(pageRequest: PageRequest<T>, dto: SearchDto): Observable<Page<T>> {
     if (window.navigator.onLine) {
-      return this.httpClient.post<Page<T>>(`${this.getFormattedUrl()}/search`, {
-        ...pageRequest,
+      const {sort, ...remaining} = pageRequest;
+
+      let params: HttpParams = new HttpParams();
+
+      params = params.appendAll({
+        ...remaining,
         ...dto,
       });
+
+      if (sort && sort.field) {
+        params = params.append('sortOrder', sort.order);
+        params = params.append('sortField', sort.field);
+      }
+
+      return this.httpClient.get<Page<T>>(`${this.getFormattedUrl()}`, {
+        params
+      });
+
     }
 
     return from(
-      this.idbService.search(this.resource, pageRequest, dto, this.idbSearch) as Promise<any>, 
+      this.idbService.search(this.resource, pageRequest, dto, this.idbSearch) as Promise<any>,
     );
   }
 

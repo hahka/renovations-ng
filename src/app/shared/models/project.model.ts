@@ -2,7 +2,7 @@ import { BaseModel } from './api/base.model';
 
 export class Project implements BaseModel {
   id?: string;
-  name!: string;
+  label!: string;
 
   constructor(obj?: Project) {
     Object.assign(this, obj);
@@ -11,7 +11,7 @@ export class Project implements BaseModel {
   prepareForIdb() {
     return {
       ...this,
-      nameSortable: this.name.toUpperCase(),
+      nameSortable: this.label.toUpperCase(),
     };
   }
 }

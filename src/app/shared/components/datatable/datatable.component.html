@@ -1,0 +1,49 @@
+<app-page-header [title]="datatableTitle" [forList]="true" *ngIf="showPageHeader">
+  <div buttons>
+    <button mat-flat-button color="primary" [routerLink]="'new'" *ngIf="showAddButton">
+      <mat-icon matPrefix>add</mat-icon>
+      {{ 'common.action.add' | translate }}
+    </button>
+    <!--<ng-content select="[topRightTemplate]"></ng-content>-->
+  </div>
+</app-page-header>
+<div class="app-datatable mat-elevation-z2">
+  <div class="app-datatable__header" *ngIf="showDatatableHeader">
+    <app-searchbar [searchValue]="(dataSource?.getQuery() | async)?.search"
+      (search)="dataSource?.queryBy({ search: $event })"></app-searchbar>
+  </div>
+  <!-- TODO: loading screen -->
+  <mat-table *ngIf="dataSource" matSort [dataSource]="dataSource"
+    (matSortChange)="onSortChange($event.active, $event.direction)">
+    <ng-container [matColumnDef]="column.field" *ngFor="let column of fullColumns">
+      <mat-header-cell [ngClass]="{ 'datatable-header-sortable': headerRowOptions.canSort }" *matHeaderCellDef
+        mat-sort-header>
+        <a class="sort-by">{{ column.label | translate }}</a>
+        <app-sort-indicator *ngIf="headerRowOptions?.canSort" [dataSource]="dataSource"
+          [field]="column.field"></app-sort-indicator>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" [ngSwitch]="column.type">
+        <ng-template let-data [ngTemplateOutletContext]="{
+            $implicit: column.resolve ? column.resolve(element) : element[column.field]
+          }" [ngTemplateOutlet]="matCellTemplate" #matCellTemplate>
+          <span *ngSwitchCase="ColumnType.string">{{ data }}</span>
+          <span *ngSwitchCase="ColumnType.label">{{ data }}</span>
+          <span *ngSwitchCase="ColumnType.month_year" class="uppercase--first">
+            {{ data | date: 'MMMM yyyy' }}</span>
+          <span *ngSwitchCase="ColumnType.day_month_year" class="uppercase--first">
+            {{ data | date: 'dd MMMM yyyy' }}</span>
+        </ng-template>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container *ngIf="headerRowOptions?.isDisplayed">
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    </ng-container>
+    <mat-row *matRowDef="let row; columns: displayedColumns" (click)="onRowClick(row)"></mat-row>
+  </mat-table>
+
+  <mat-paginator [length]="(dataSource?.page$ | async)?.totalElements"
+    [pageIndex]="dataSource?.getCurrentPage() | async" [pageSize]="20" [pageSizeOptions]="[10, 20, 50]"
+    (page)="dataSource?.updatePageOptions($event)">
+  </mat-paginator>
+</div>

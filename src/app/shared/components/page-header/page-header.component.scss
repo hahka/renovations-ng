@@ -1,0 +1,69 @@
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  position: sticky;
+  top: 0px;
+  z-index: 100;
+
+  &__content {
+    flex: 1;
+    display: flex;
+
+    & > * {
+      line-height: 40px;
+    }
+
+    &__group {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      &:not(:last-of-type) {
+        margin-right: 10px;
+      }
+
+      &.left {
+        justify-content: left;
+      }
+      &.center {
+        justify-content: center;
+      }
+      &.right {
+        justify-content: right;
+      }
+    }
+  }
+
+  &__title {
+    font-size: 24px;
+    vertical-align: middle;
+    justify-content: left;
+    margin-right: 10px;
+    flex: 1;
+
+    &__subtitle {
+      font-size: 18px;
+    }
+
+    &--multi-lines {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .small {
+      font-size: medium;
+      line-height: normal;
+    }
+  }
+}
+
+.btn-back {
+  margin-right: 16px;
+}
+
+.buttons-container {
+  & > button {
+    margin-left: 10px;
+  }
+}

@@ -8,8 +8,7 @@ import { IdbCommonService } from './idb-common.service';
 @Injectable({
   providedIn: 'root',
 })
-export class IdbService<T extends Project /*extends Market | Product | MarketSales*/> extends IdbCommonService<T> {
-  // TODO: extends
+export class IdbService<T extends Project> extends IdbCommonService<T> {
   constructor() {
     super();
   }
@@ -43,15 +42,15 @@ export class IdbService<T extends Project /*extends Market | Product | MarketSal
 
     let total = 0;
 
-    const data = [];
-    let dataRemaining = pageRequest.length;
+    const content = [];
+    let dataRemaining = pageRequest.size;
     while (true) {
       if (cursor) {
         const value = cursor.value;
 
         if (idbSearch(value, _dto.search)) {
           if (dataRemaining > 0) {
-            data.push(value);
+            content.push(value);
             dataRemaining -= 1;
           }
           total += 1;
@@ -63,8 +62,26 @@ export class IdbService<T extends Project /*extends Market | Product | MarketSal
     }
 
     return {
-      data,
-      pagination: { page: 0, length: data.length, total },
+      content,
+      pageable: {
+        // TODO: clean that shit with pageable
+        pageNumber: 0,
+        offset: 0,
+        pageSize: 0,
+        paged: false,
+        sort: {
+          empty: false,
+          sorted: false,
+          unsorted: false
+        },
+        unpaged: false
+      },
+      numberOfElements: content.length,
+      totalElements: total,
+      totalPages: total,
+      first: true,
+      last: true,
+      empty: false,
     };
   }
 }

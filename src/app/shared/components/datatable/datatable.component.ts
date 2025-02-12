@@ -117,7 +117,7 @@ export class DatatableComponent<T extends Project> implements OnDestroy {
       } else {
         this.dataSource?.sortBy({
           field: active,
-          order: direction === 'asc' ? 1 : -1,
+          order: direction,
         });
       }
     }

@@ -127,8 +127,7 @@ export abstract class ApiService<
       });
 
       if (sort && sort.field) {
-        params = params.append('sortOrder', sort.order);
-        params = params.append('sortField', sort.field);
+        params = params.append('sort', sort.field + ',' + sort.order);
       }
 
       return this.httpClient.get<Page<T>>(`${this.getFormattedUrl()}`, {

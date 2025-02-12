@@ -37,7 +37,7 @@ export class IdbService<T extends Project> extends IdbCommonService<T> {
 
     let cursor = await indexedStore.openCursor(
       undefined,
-      sort && sort.order === -1 ? 'prev' : 'next',
+      sort && sort.order === 'desc' ? 'prev' : 'next',
     );
 
     let total = 0;

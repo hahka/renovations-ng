@@ -36,7 +36,8 @@ export class ProjectsComponent extends AbstractListComponent<Project> {
       },
       {
         initialQuery: { search: '' },
-        initialSort: { field: 'id', order: 1 },
+        // TODO: verify order (which should correspond to date of creation) with api usage and not just fake data
+        initialSort: { field: 'id', order: 'asc' },
       },
     );
 

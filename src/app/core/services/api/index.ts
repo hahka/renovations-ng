@@ -7,7 +7,7 @@ export interface Sort<T extends BaseModel> {
   /** Field of the model that will be sorted */
   field: keyof T & string;
   /** Sorting order. May be -1 (descending) or 1 (ascending) */
-  order: 1 | -1;
+  order: 'asc' | 'desc';
 }
 
 export interface PageRequest<T extends BaseModel> {

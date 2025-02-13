@@ -13,6 +13,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth-interceptor';
+import {DateAdapter, MAT_DATE_FORMATS, provideNativeDateAdapter} from "@angular/material/core";
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (
   http: HttpClient
@@ -28,6 +29,7 @@ export const appConfig: ApplicationConfig = {
       withInterceptors([authInterceptor])
     ),
     provideAnimationsAsync(),
+    provideNativeDateAdapter(),
     importProvidersFrom([TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

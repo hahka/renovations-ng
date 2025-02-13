@@ -6,7 +6,7 @@ import { IdbService } from '../idb.service';
 import { ResourceUrlHelper } from './resource-url-helper';
 import { IdbStoresEnum } from '../../../utils/enums';
 import { EnvironmentService } from '../environment/environment.service';
-import { Detail, Page, PageRequest } from '.';
+import { Page, PageRequest } from '.';
 import { SearchDto } from '../../../shared/models/api/search-dto.model';
 import { Project } from '../../../shared/models/project.model';
 
@@ -52,11 +52,11 @@ export abstract class ApiService<
    */
   public archiveById(id: string, unarchive?: boolean): Observable<T> {
     return this.httpClient
-      .patch<Detail<T>>(
+      .patch<T>(
         `${this.getFormattedUrl()}/${!!unarchive ? 'unarchive' : 'archive'}/${id}`,
         {},
       )
-      .pipe(take(1), pluck('data'));
+      .pipe(take(1));
   }
 
   /**
@@ -74,7 +74,7 @@ export abstract class ApiService<
    */
   getById(id: string): Observable<T> {
     if (this.window.navigator.onLine) {
-      return this.httpClient.get<Detail<T>>(`${this.getFormattedUrl()}/${id}`).pipe(pluck('data'));
+      return this.httpClient.get<T>(`${this.getFormattedUrl()}/${id}`);
     }
 
     return from(this.idbService.getById(this.resource, id) as Promise<any>);

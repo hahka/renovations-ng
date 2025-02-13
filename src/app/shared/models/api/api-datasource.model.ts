@@ -2,7 +2,7 @@ import { DataSource } from '@angular/cdk/table';
 import { PageEvent } from '@angular/material/paginator';
 
 import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
-import { debounceTime, pluck, share, switchMap } from 'rxjs/operators';
+import { debounceTime, map, pluck, share, switchMap } from 'rxjs/operators';
 
 import { Page, PaginatedEndpoint, Sort } from '../../../core/services/api';
 
@@ -62,7 +62,7 @@ export class ApiDataSource<T extends BaseModel> extends DataSource<T> {
 
   /** @inheritdoc */
   connect(): Observable<T[]> {
-    return this.page$.pipe(pluck('content')).pipe((s) => {
+    return this.page$.pipe(map(data => data.content)).pipe((s) => {
       this._dataSubscription.unsubscribe();
       this._dataSubscription = s.subscribe((d) => {
         console.log(d);

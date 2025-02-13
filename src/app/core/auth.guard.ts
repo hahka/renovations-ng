@@ -15,7 +15,6 @@ export class AuthGuard implements CanMatch {
   }
 
   isAuthenticated(segments: UrlSegment[]): boolean | UrlTree {
-    console.log("TEST");
     if (!this.authService.accessToken) {
       // always redirect to user's requested page
       const redirectUrl = segments.map(segment => segment.path).join('/');

@@ -20,7 +20,7 @@
     <div class="buttons-wrapper buttons-wrapper--end" *ngIf="displayCrudBtn">
       <div *ngIf="readonly && online">
         <button mat-stroked-button color="primary" (click)="onClick(PageHeaderAction.UPDATE)">
-          {{ 'common.action.update' | translate }}
+          {{ 'common.action.update' | translate | titlecase }}
         </button>
       </div>
       <div *ngIf="!readonly" class="buttons-container">
@@ -31,7 +31,7 @@
       </ng-container> -->
 
         <button mat-stroked-button color="primary" (click)="onClick(PageHeaderAction.CANCEL)">
-          {{ 'common.action.cancel' | translate }}
+          {{ 'common.action.cancel' | translate | titlecase }}
         </button>
         <button
           mat-flat-button
@@ -40,7 +40,7 @@
           [disabled]="(control && !control.valid) || !!isArchived"
           (click)="onClick(PageHeaderAction.SAVE)"
         >
-          {{ 'common.action.save' | translate }}
+          {{ 'common.action.save' | translate | titlecase }}
         </button>
       </div>
     </div>

@@ -37,11 +37,6 @@ export interface Page<T extends BaseModel> {
   numberOfElements: number;
 }
 
-export interface Detail<T extends BaseModel> {
-  /** Data fetched by the API */
-  data: T;
-}
-
 export type PaginatedEndpoint<T extends BaseModel, Q> = (
   pageable: PageRequest<T>,
   query: Q,

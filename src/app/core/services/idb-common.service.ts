@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { DBSchema, IDBPDatabase, IDBPTransaction, openDB } from 'idb';
 import { IdbStoresEnum } from '../../utils/enums';
 import { Project } from '../../shared/models/project.model';
-import {BaseModelImpls} from "../../utils/types";
+import { BaseModelImpls } from "../../utils/types";
 import {Work} from "../../shared/models/work.model";
 
 interface MyDB extends DBSchema {
@@ -79,7 +79,7 @@ export class IdbCommonService<T extends BaseModelImpls> {
     }
   }
 
-  public async putCommon(store: IdbStoresEnum, data: T, id?: string) {
+  public async putCommon(store: IdbStoresEnum, data: BaseModelImpls, id?: string) {
     const dataId = id || Date.now().toString();
     await this.onlineIdb.put(store, data, dataId);
 

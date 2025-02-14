@@ -1,8 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { BaseModel } from '../../../models/api/base.model';
 import { ApiDataSource } from '../../../models/api/api-datasource.model';
 import { AsyncPipe, NgClass, NgIf } from '@angular/common';
-import { Project } from '../../../models/project.model';
+import {BaseModelImpls} from "../../../../utils/types";
 
 @Component({
   selector: 'app-sort-indicator',
@@ -10,7 +9,7 @@ import { Project } from '../../../models/project.model';
   templateUrl: './sort-indicator.component.html',
   styleUrls: ['./sort-indicator.component.scss'],
 })
-export class SortIndicatorComponent<T extends Project> {
+export class SortIndicatorComponent<T extends BaseModelImpls> {
   /** DataSource with the sort subject used in the template to display arrow correctly */
   @Input() dataSource?: ApiDataSource<T>;
 

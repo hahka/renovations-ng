@@ -17,7 +17,7 @@ export class SearchbarComponent {
   @Output() search: EventEmitter<string> = new EventEmitter<string>();
 
   /** Event sent by the input when the user types in */
-  onKeyup(value: any): void {
+  onKeyup(value: string): void {
     this.search.emit(value);
   }
 }

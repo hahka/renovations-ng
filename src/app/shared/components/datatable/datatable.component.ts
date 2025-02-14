@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, Output, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -19,7 +19,6 @@ import { SearchbarComponent } from '../searchbar/searchbar.component';
 import { PageHeaderComponent } from '../page-header/page-header.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { SortIndicatorComponent } from './sort-indicator/sort-indicator.component';
-import { DataSource } from '@angular/cdk/collections';
 import { Project } from '../../models/project.model';
 
 @Component({
@@ -88,7 +87,7 @@ export class DatatableComponent<T extends Project> implements OnDestroy {
   // @Input() topRightTemplate: TemplateRef<any>;
 
   /** Fired when a row has been clicked */
-  @Output() rowClicked: EventEmitter<BaseModel> = new EventEmitter();
+  @Output() rowClicked = new EventEmitter<BaseModel>();
 
   /** Array of strings that is used by mat-table to identify columns */
   displayedColumns: (keyof T)[] = [];

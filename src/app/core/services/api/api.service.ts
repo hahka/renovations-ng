@@ -1,14 +1,13 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable, InjectionToken } from '@angular/core';
 import { from, Observable } from 'rxjs';
-import { pluck, take } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { IdbService } from '../idb.service';
 import { ResourceUrlHelper } from './resource-url-helper';
 import { IdbStoresEnum } from '../../../utils/enums';
 import { EnvironmentService } from '../environment/environment.service';
 import { Page, PageRequest } from '.';
 import { SearchDto } from '../../../shared/models/api/search-dto.model';
-import { Project } from '../../../shared/models/project.model';
 import {BaseModelImpls} from "../../../utils/types";
 
 export const WINDOW = new InjectionToken<Window>('WindowToken', {
@@ -54,14 +53,14 @@ export abstract class ApiService<
   public archiveById(id: string, unarchive?: boolean): Observable<T> {
     return this.httpClient
       .patch<T>(
-        `${this.getFormattedUrl()}/${!!unarchive ? 'unarchive' : 'archive'}/${id}`,
+        `${this.getFormattedUrl()}/${unarchive ? 'unarchive' : 'archive'}/${id}`,
         {},
       )
       .pipe(take(1));
   }
 
   /**
-   * Deletes a resouce corresponding to the given id
+   * Deletes a resource corresponding to the given id
    * @param id Id of the wanted resource
    */
   deleteById(id: string): Observable<any> {
@@ -70,7 +69,7 @@ export abstract class ApiService<
   }
 
   /**
-   * Fetches a resouce corresponding to the given id
+   * Fetches a resource corresponding to the given id
    * @param id Id of the wanted resource
    */
   getById(id: string): Observable<T> {

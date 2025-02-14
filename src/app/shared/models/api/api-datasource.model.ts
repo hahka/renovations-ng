@@ -2,7 +2,7 @@ import { DataSource } from '@angular/cdk/table';
 import { PageEvent } from '@angular/material/paginator';
 
 import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
-import { debounceTime, map, pluck, share, switchMap } from 'rxjs/operators';
+import { debounceTime, map, share, switchMap } from 'rxjs/operators';
 
 import { Page, PaginatedEndpoint, Sort } from '../../../core/services/api';
 
@@ -28,7 +28,7 @@ export class ApiDataSource<T extends BaseModel> extends DataSource<T> {
   /** BehaviorSubject for search params. Should trigger api call */
   private readonly query: BehaviorSubject<SearchDto>;
 
-  /** Subject containing sorting informations. Updated via MatDataTable. Should trigger api call */
+  /** Subject containing sorting information. Updated via MatDataTable. Should trigger api call */
   private readonly sort: BehaviorSubject<Sort<T> | undefined>;
 
   private _dataSubscription: Subscription = Subscription.EMPTY;

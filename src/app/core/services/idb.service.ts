@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { SearchDto } from '../../shared/models/api/search-dto.model';
 import { IdbStoresEnum } from '../../utils/enums';
 import { Page, PageRequest } from './api';
-import { Project } from '../../shared/models/project.model';
 import { IdbCommonService } from './idb-common.service';
-import {BaseModelImpls} from "../../utils/types";
+import { BaseModelImpls } from "../../utils/types";
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +20,7 @@ export class IdbService<T extends BaseModelImpls> extends IdbCommonService<T> {
       data.id = dataId;
     }
 
-    return super.putCommon(store, data.prepareForIdb() as any, dataId);
+    return super.putCommon(store, data.prepareForIdb(), dataId);
   }
 
   public async search(

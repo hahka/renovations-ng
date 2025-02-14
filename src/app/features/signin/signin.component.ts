@@ -5,7 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { delay, tap } from 'rxjs';
+import { tap } from 'rxjs';
 import { AuthService } from '../../core/services/api/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { REDIRECT_TO_PARAM_NAME } from '../../core/auth.guard';

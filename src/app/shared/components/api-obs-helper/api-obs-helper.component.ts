@@ -5,7 +5,6 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ApiService } from '../../../core/services/api/api.service';
 import { CommonModule } from '@angular/common';
-import { Project } from '../../models/project.model';
 import {BaseModelImpls} from "../../../utils/types";
 
 @Component({
@@ -31,10 +30,10 @@ export class ApiObsHelperComponent<T extends BaseModelImpls> {
   }
 
   /** Event sending the result of the creation/update of the resource */
-  @Output() postedOrPatched: EventEmitter<T> = new EventEmitter();
+  @Output() postedOrPatched = new EventEmitter<T>();
 
   /** Event sending the result of the creation/update of the resource */
-  @Output() httpError: EventEmitter<HttpErrorResponse> = new EventEmitter();
+  @Output() httpError = new EventEmitter<HttpErrorResponse>();
 
   /**
    * Wether we need to create/update the resource.

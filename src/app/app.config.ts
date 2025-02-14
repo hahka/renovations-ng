@@ -4,16 +4,14 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
 import {
-  provideTranslateService,
   TranslateLoader,
   TranslateModule,
-  TranslateStore,
 } from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth-interceptor';
-import {DateAdapter, MAT_DATE_FORMATS, provideNativeDateAdapter} from "@angular/material/core";
+import { provideNativeDateAdapter } from "@angular/material/core";
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (
   http: HttpClient

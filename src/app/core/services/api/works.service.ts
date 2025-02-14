@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IdbStoresEnum } from '../../../utils/enums';
-import { ApiService } from '../api/api.service';
-import { Project } from '../../../shared/models/project.model';
+import { ApiService } from './api.service';
 import {Work} from "../../../shared/models/work.model";
 
 @Injectable({

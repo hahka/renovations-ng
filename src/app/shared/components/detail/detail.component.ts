@@ -9,19 +9,15 @@ import { ApiService } from '../../../core/services/api/api.service';
 import { ApiObsHelperComponent } from '../api-obs-helper/api-obs-helper.component';
 import { PageHeaderAction } from '../page-header/page-header-action.enum';
 import { PageHeaderEvent } from '../page-header/page-header-event.interface';
-import { Project } from '../../models/project.model';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { PageHeaderComponent } from '../page-header/page-header.component';
 import {BaseModelImpls} from "../../../utils/types";
 
 @Component({
   template: "",
   imports: [
     CommonModule,
-    // ApiObsHelperComponent,
-    // PageHeaderComponent,
     MatFormFieldModule,
     ReactiveFormsModule,
     MatCardModule,
@@ -113,7 +109,7 @@ export abstract class DetailComponent<T extends BaseModelImpls>
   /** Returns the Object in the format used by the api. This function can be overridden in components when needed */
   abstract getFormattedData(): T;
 
-  /** Needs to update this.isArchived and to patch the form and differents FormControls/FormGroups */
+  /** Needs to update this.isArchived and to patch the form and different FormControls/FormGroups */
   patchForm(data: T): void {
     this.form.patchValue(data);
   };

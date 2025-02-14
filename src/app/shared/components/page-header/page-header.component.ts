@@ -34,7 +34,7 @@ export class PageHeaderComponent {
   @Output() pageHeaderEvent = new EventEmitter<PageHeaderEvent>();
 
   /** Title to be displayed in the header */
-  @Input() title: string = '';
+  @Input() title = '';
 
   /** Wether modifications are being made on the form */
   get readonly(): boolean {

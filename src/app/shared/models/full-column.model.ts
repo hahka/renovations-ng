@@ -12,5 +12,5 @@ export interface FullColumn<T extends Project> {
   type?: ColumnType;
 
   /** A resolve function to resolve data value */
-  resolve?: (_: T) => any;
+  resolve?: (_: T) => string;
 }

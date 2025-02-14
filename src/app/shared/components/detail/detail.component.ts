@@ -14,6 +14,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { PageHeaderComponent } from '../page-header/page-header.component';
+import {BaseModelImpls} from "../../../utils/types";
 
 @Component({
   template: "",
@@ -26,7 +27,7 @@ import { PageHeaderComponent } from '../page-header/page-header.component';
     MatCardModule,
     MatInputModule,]
 })
-export abstract class DetailComponent<T extends Project>
+export abstract class DetailComponent<T extends BaseModelImpls>
   implements AfterViewInit, OnInit, OnDestroy {
   /** ViewChild helping call the api via observables without subscriptions */
   @ViewChild(ApiObsHelperComponent, { static: true }) apiObsHelper?: ApiObsHelperComponent<T>; // TODO: ? assertion

@@ -5,7 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { tap } from 'rxjs';
+import { delay, tap } from 'rxjs';
 import { AuthService } from '../../core/services/api/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { REDIRECT_TO_PARAM_NAME } from '../../core/auth.guard';
@@ -34,7 +34,15 @@ export class SigninComponent {
 
   signIn(e: Event) {
     e.stopPropagation();
-    if (this.signinForm.valid) {
+    //______
+      this.authService.signin("user1", "password").pipe(
+        tap(() => {
+          this.router.navigate([this.redirectTo || ""]);
+        })
+      ).subscribe();
+      return;
+    //______
+    /*if (this.signinForm.valid) {
       const signin = this.signinForm.value;
       // TODO: hash paswword before send?
       if (signin.emailOrUsername && signin.password) {
@@ -44,6 +52,6 @@ export class SigninComponent {
           })
         ).subscribe();
       }
-    }
+    }*/
   }
 }

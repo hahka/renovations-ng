@@ -4,11 +4,12 @@ import { IdbStoresEnum } from '../../utils/enums';
 import { Page, PageRequest } from './api';
 import { Project } from '../../shared/models/project.model';
 import { IdbCommonService } from './idb-common.service';
+import {BaseModelImpls} from "../../utils/types";
 
 @Injectable({
   providedIn: 'root',
 })
-export class IdbService<T extends Project> extends IdbCommonService<T> {
+export class IdbService<T extends BaseModelImpls> extends IdbCommonService<T> {
   constructor() {
     super();
   }

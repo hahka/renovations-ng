@@ -9,6 +9,7 @@ import { EnvironmentService } from '../environment/environment.service';
 import { Page, PageRequest } from '.';
 import { SearchDto } from '../../../shared/models/api/search-dto.model';
 import { Project } from '../../../shared/models/project.model';
+import {BaseModelImpls} from "../../../utils/types";
 
 export const WINDOW = new InjectionToken<Window>('WindowToken', {
   factory: () => {
@@ -23,7 +24,7 @@ export const WINDOW = new InjectionToken<Window>('WindowToken', {
   providedIn: 'root',
 })
 export abstract class ApiService<
-  T extends Project
+  T extends BaseModelImpls
 > extends ResourceUrlHelper {
   /** API base endpoint for resource */
   abstract override resource: IdbStoresEnum;

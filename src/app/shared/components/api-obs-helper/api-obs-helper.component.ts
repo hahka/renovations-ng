@@ -6,6 +6,7 @@ import { catchError, map } from 'rxjs/operators';
 import { ApiService } from '../../../core/services/api/api.service';
 import { CommonModule } from '@angular/common';
 import { Project } from '../../models/project.model';
+import {BaseModelImpls} from "../../../utils/types";
 
 @Component({
   selector: 'app-api-obs-helper',
@@ -13,7 +14,7 @@ import { Project } from '../../models/project.model';
   styleUrls: ['./api-obs-helper.component.scss'],
   imports: [CommonModule]
 })
-export class ApiObsHelperComponent<T extends Project> {
+export class ApiObsHelperComponent<T extends BaseModelImpls> {
   /** The apiService corresponding to the current resource */
   // TODO: check Assertion
   private _apiService!: ApiService<T>;

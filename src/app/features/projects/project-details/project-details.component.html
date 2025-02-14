@@ -1,8 +1,9 @@
 <ng-container *ngIf="detailId$ | async as detailId">
-    <app-page-header title="{{ 'features.markets.title' | translate }}" [control]="form" [isArchived]="isArchived"
+    <app-page-header title="{{ 'features.projects.title' | translate }}" [control]="form" [isArchived]="isArchived"
         (pageHeaderEvent)="onPageHeaderEvent($event)"></app-page-header>
     <mat-card>
-        <form [formGroup]="form" (ngSubmit)="submit()" *ngIf="detail$ | async as detail">
+        <ng-container *ngIf="detail$ | async as detail">
+        <form [formGroup]="form" (ngSubmit)="submit()">
             <h3>{{ 'common.information' | translate }}</h3>
             <mat-form-field appearance="outline" floatLabel="always">
                 <mat-label>{{ 'common.label' | translate }}</mat-label>
@@ -28,6 +29,11 @@
                 <mat-datepicker #endDatePicker></mat-datepicker>
               </mat-form-field>
         </form>
+        <div>{{ 'features.projects.works' | translate }}</div>
+        <div *ngFor="let work of detail.works">
+            <span (click)="onRowClick(work)">{{ work.label }}</span>
+        </div>
+        </ng-container>
     </mat-card>
 </ng-container>
 <app-api-obs-helper (postedOrPatched)="onPostedOrPatched($event)"

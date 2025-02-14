@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { DBSchema, IDBPDatabase, IDBPTransaction, openDB } from 'idb';
 import { IdbStoresEnum } from '../../utils/enums';
 import { Project } from '../../shared/models/project.model';
+import {BaseModelImpls} from "../../utils/types";
+import {Work} from "../../shared/models/work.model";
 
 interface MyDB extends DBSchema {
   // TODO: schema
@@ -10,6 +12,11 @@ interface MyDB extends DBSchema {
     key: string;
     indexes: any;
   };
+  works: {
+    value: Work;
+    key: string;
+    indexes: any;
+  }
   /*products: {
     value: Product;
     key: string;
@@ -31,7 +38,7 @@ interface MyDB extends DBSchema {
 @Injectable({
   providedIn: 'root',
 })
-export class IdbCommonService<T extends Project/* extends Market | MarketSales | Stock | Product*/> {
+export class IdbCommonService<T extends BaseModelImpls> {
   static upgradeToV1(db: IDBPDatabase<MyDB>) {
     /*const marketsStore = db.createObjectStore(IdbStoresEnum.MARKETS);
     marketsStore.createIndex('nameSortable', 'nameSortable');

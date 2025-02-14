@@ -1,4 +1,4 @@
-import { AsyncPipe, Location, NgIf } from '@angular/common';
+import {AsyncPipe, Location, NgFor, NgIf} from '@angular/common';
 import { Component } from '@angular/core';
 import { DetailComponent } from '../../../shared/components/detail/detail.component';
 import { Project } from '../../../shared/models/project.model';
@@ -12,10 +12,11 @@ import { MatError, MatFormFieldModule, MatLabel } from '@angular/material/form-f
 import { MatInputModule } from '@angular/material/input';
 import { MatCard } from '@angular/material/card';
 import { MatDatepickerModule } from "@angular/material/datepicker";
+import {BaseModel} from "../../../shared/models/api/base.model";
 
 @Component({
   selector: 'app-project-details',
-  imports: [ApiObsHelperComponent, NgIf, AsyncPipe, ReactiveFormsModule, PageHeaderComponent, MatInputModule, TranslatePipe, MatFormFieldModule, MatLabel, MatError, MatCard, MatDatepickerModule],
+  imports: [ApiObsHelperComponent, NgIf, AsyncPipe, ReactiveFormsModule, PageHeaderComponent, MatInputModule, TranslatePipe, MatFormFieldModule, MatLabel, MatError, MatCard, MatDatepickerModule, NgFor],
   templateUrl: './project-details.component.html',
   styleUrl: './project-details.component.scss'
 })
@@ -38,4 +39,7 @@ export class ProjectDetailsComponent extends DetailComponent<Project> {
     });
   }
 
+  onRowClick(row: BaseModel): void {
+    this.router.navigate(['works', row.id]);
+  }
 }

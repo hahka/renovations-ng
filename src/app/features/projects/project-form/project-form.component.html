@@ -1,0 +1,58 @@
+<ng-container *ngIf="detailId$ | async as detailId">
+  <mat-dialog-content>
+    <ng-container *ngIf="detail$ | async as detail">
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <h3>{{ "common.information" | translate }}</h3>
+        <div class="flex flex--row">
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>{{ "common.label" | translate }}</mat-label>
+            <input matInput formControlName="label" required />
+            <mat-error
+              *ngIf="
+                form.controls &&
+                form.controls['label'].errors &&
+                form.controls['label'].errors['duplicated']
+              "
+              >{{ "features.markets.form.errors.name_duplicated" | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="flex flex--row">
+          <mat-form-field appearance="outline">
+            <mat-label>Choose a date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="startDatePicker"
+              formControlName="startDate"
+            />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="startDatePicker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #startDatePicker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Choose a date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="endDatePicker"
+              formControlName="endDate"
+            />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="endDatePicker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #endDatePicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </form>
+    </ng-container>
+  </mat-dialog-content>
+</ng-container>
+<app-api-obs-helper
+  (postedOrPatched)="onPostedOrPatched($event)"
+  (httpError)="onHttpError($event)"
+></app-api-obs-helper>

@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  Output,
+} from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -37,7 +43,7 @@ import { Project } from '../../models/project.model';
     MatTableModule,
     MatCheckboxModule,
     RouterModule,
-    TranslatePipe
+    TranslatePipe,
   ],
   templateUrl: './datatable.component.html',
   styleUrls: ['./datatable.component.scss'],
@@ -81,7 +87,7 @@ export class DatatableComponent<T extends Project> implements OnDestroy {
   @Input() showArchivedFilter = true;
 
   /** Title to display for the datatable */
-  @Input() datatableTitle = "Liste";
+  @Input() datatableTitle = 'Liste';
 
   // TODO: still usefull?
   // @Input() topRightTemplate: TemplateRef<any>;
@@ -89,13 +95,18 @@ export class DatatableComponent<T extends Project> implements OnDestroy {
   /** Fired when a row has been clicked */
   @Output() rowClicked = new EventEmitter<BaseModel>();
 
+  @Output() addButtonClicked = new EventEmitter();
+
   /** Array of strings that is used by mat-table to identify columns */
   displayedColumns: (keyof T)[] = [];
 
   /** List of columns to display */
   private _fullColumns: FullColumn<T>[] = [];
 
-  constructor(private readonly activatedRoute: ActivatedRoute, private readonly router: Router) { }
+  constructor(
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly router: Router,
+  ) {}
 
   /** Redirects to the detail page of clicked row */
   onRowClick(row: BaseModel): void {
@@ -104,6 +115,10 @@ export class DatatableComponent<T extends Project> implements OnDestroy {
     } else {
       this.rowClicked.emit(row);
     }
+  }
+
+  onAddButtonClick() {
+    this.addButtonClicked.emit();
   }
 
   /**

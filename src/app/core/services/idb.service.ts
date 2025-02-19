@@ -3,7 +3,7 @@ import { SearchDto } from '../../shared/models/api/search-dto.model';
 import { IdbStoresEnum } from '../../utils/enums';
 import { Page, PageRequest } from './api';
 import { IdbCommonService } from './idb-common.service';
-import { BaseModelImpls } from "../../utils/types";
+import { BaseModelImpls } from '../../utils/types';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +33,9 @@ export class IdbService<T extends BaseModelImpls> extends IdbCommonService<T> {
     const store = this.onlineIdb.transaction(storeName, 'readonly').store;
 
     const sort = pageRequest.sort;
-    const indexedStore = store.index(sort ? `${String(sort.field)}Sortable` : 'nameSortable');
+    const indexedStore = store.index(
+      sort ? `${String(sort.field)}Sortable` : 'nameSortable',
+    );
 
     let cursor = await indexedStore.openCursor(
       undefined,
@@ -72,9 +74,9 @@ export class IdbService<T extends BaseModelImpls> extends IdbCommonService<T> {
         sort: {
           empty: false,
           sorted: false,
-          unsorted: false
+          unsorted: false,
         },
-        unpaged: false
+        unpaged: false,
       },
       numberOfElements: content.length,
       totalElements: total,

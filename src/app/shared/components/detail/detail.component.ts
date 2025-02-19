@@ -1,6 +1,13 @@
 import { CommonModule, Location } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { AfterViewInit, Component, HostBinding, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  HostBinding,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
@@ -12,21 +19,24 @@ import { PageHeaderEvent } from '../page-header/page-header-event.interface';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import {BaseModelImpls} from "../../../utils/types";
+import { BaseModelImpls } from '../../../utils/types';
 
 @Component({
-  template: "",
+  template: '',
   imports: [
     CommonModule,
     MatFormFieldModule,
     ReactiveFormsModule,
     MatCardModule,
-    MatInputModule,]
+    MatInputModule,
+  ],
 })
 export abstract class DetailComponent<T extends BaseModelImpls>
-  implements AfterViewInit, OnInit, OnDestroy {
+  implements AfterViewInit, OnInit, OnDestroy
+{
   /** ViewChild helping call the api via observables without subscriptions */
-  @ViewChild(ApiObsHelperComponent, { static: true }) apiObsHelper?: ApiObsHelperComponent<T>; // TODO: ? assertion
+  @ViewChild(ApiObsHelperComponent, { static: true })
+  apiObsHelper?: ApiObsHelperComponent<T>; // TODO: ? assertion
 
   /** Class that is used in consumer's components to apply some style for the administration */
   @HostBinding('class') consumerClass = 'admin__detail';
@@ -36,7 +46,7 @@ export abstract class DetailComponent<T extends BaseModelImpls>
 
   /** Id of the object */
   // TODO: check initial value
-  detailId = '';
+  detailId: string = '';
 
   /** Observable of the object id */
   detailId$?: Observable<string>;
@@ -63,13 +73,15 @@ export abstract class DetailComponent<T extends BaseModelImpls>
     protected readonly apiService: ApiService<T>,
     protected readonly location: Location,
     protected readonly router: Router,
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     if (!this.detail$) {
       this.detail$ = this.refresh.asObservable().pipe(
+        tap((data) => console.log(data)),
         switchMap((refreshedId) => {
-          this.detailId = refreshedId || '';
+          this.detailId = refreshedId;
+          console.log('refreshId: ' + refreshedId);
           if (this.detailId === 'new') {
             // Creation mode, returning a "fake" observable returning an empty data
             return of(this.newData());
@@ -79,6 +91,7 @@ export abstract class DetailComponent<T extends BaseModelImpls>
           // Edition mode, returning an api call
           return this.apiService.getById(this.detailId).pipe(
             tap((data) => {
+              console.log(data);
               this.patchForm(data);
               this.disable();
             }),
@@ -88,7 +101,8 @@ export abstract class DetailComponent<T extends BaseModelImpls>
 
       this.detailId$ = this.activatedRoute.paramMap.pipe(
         map((paramMap) => {
-          const detailId = paramMap.get('id') || '';
+          const detailId = paramMap.get('id') || 'new';
+          console.log('detailId: ' + detailId);
           this.refresh.next(detailId);
 
           return detailId;
@@ -111,8 +125,8 @@ export abstract class DetailComponent<T extends BaseModelImpls>
 
   /** Needs to update this.isArchived and to patch the form and different FormControls/FormGroups */
   patchForm(data: T): void {
-    this.form.patchValue(data);
-  };
+    this.form?.patchValue(data);
+  }
 
   addSubscription(sub: Subscription) {
     if (!this.subscriptions) {
@@ -126,14 +140,18 @@ export abstract class DetailComponent<T extends BaseModelImpls>
    * Called when the user click on archive via PageHeaderComponent
    */
   archive(): void {
-    this.apiObsHelper?.archive(this.detailId, this.isArchived); // TODO: ? assertion
+    if (this.detailId) {
+      this.apiObsHelper?.archive(this.detailId, this.isArchived); // TODO: ? assertion
+    }
   }
 
   /**
    * Called when the user click on archive via PageHeaderComponent
    */
   delete(): void {
-    this.apiObsHelper?.delete(this.detailId); // TODO: ? assertion
+    if (this.detailId) {
+      this.apiObsHelper?.delete(this.detailId); // TODO: ? assertion
+    }
   }
 
   /** Disables the FormGroup. Can be overridden if FormGroup needs specific processing to be disabled */
@@ -211,10 +229,9 @@ export abstract class DetailComponent<T extends BaseModelImpls>
       this.disable();
     }
 
-
     /* this.router.navigate(['..'], {
       relativeTo: this.activatedRoute,
-    }); */ 
+    }); */
   }
 
   /** Called on form submit, used to post/patch defect category */
@@ -229,7 +246,11 @@ export abstract class DetailComponent<T extends BaseModelImpls>
    * @param httpError the http error
    */
   onHttpError(httpError: HttpErrorResponse): void {
-    if (httpError.error && httpError.error.code && httpError.error.code.indexOf('DUP') > -1) {
+    if (
+      httpError.error &&
+      httpError.error.code &&
+      httpError.error.code.indexOf('DUP') > -1
+    ) {
       // duplicated name
       if (this.form?.controls['name']) {
         // TODO ['name'] vs .name

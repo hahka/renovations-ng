@@ -1,0 +1,28 @@
+<ng-container *ngIf="detailId$ | async">
+  <app-page-header
+    title="{{ 'features.projects.title' | translate }}"
+    [isArchived]="isArchived"
+    (pageHeaderEvent)="onPageHeaderEvent($event)"
+  ></app-page-header>
+  <mat-card>
+    <ng-container *ngIf="detail$ | async as detail">
+      <h3>{{ "common.information" | translate }}</h3>
+      <div class="flex flex--row">
+        <div>
+          <span>{{ "features.projects.label" | translate }} </span
+          ><span>{{ detail.label }}</span>
+        </div>
+      </div>
+
+      <div class="flex flex--row">
+        <span>Date de début: {{ detail.startDate }}</span>
+        <span>Date de fin: {{ detail.endDate }}</span>
+      </div>
+      <mat-divider></mat-divider>
+      <div>{{ "features.projects.works" | translate }}</div>
+      <div *ngFor="let work of detail.works">
+        <span (click)="onRowClick(work)">{{ work.label }}</span>
+      </div>
+    </ng-container>
+  </mat-card>
+</ng-container>

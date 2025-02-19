@@ -8,12 +8,14 @@ import { ProjectsService } from '../../core/services/api/projects.service';
 import { TranslatePipe } from '@ngx-translate/core';
 import { DatatableComponent } from '../../shared/components/datatable/datatable.component';
 import { CommonModule } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { ProjectFormComponent } from './project-form/project-form.component';
 
 @Component({
   selector: 'app-projects',
   imports: [TranslatePipe, CommonModule, DatatableComponent],
   templateUrl: './projects.component.html',
-  styleUrl: './projects.component.scss'
+  styleUrl: './projects.component.scss',
 })
 export class ProjectsComponent extends AbstractListComponent<Project> {
   dataSource: ApiDataSource<Project>;
@@ -28,7 +30,10 @@ export class ProjectsComponent extends AbstractListComponent<Project> {
   // TODO: used anymore?
   listPersistenceKey = 'projects';
 
-  constructor(private readonly projectsService: ProjectsService) {
+  constructor(
+    private readonly projectsService: ProjectsService,
+    private readonly dialog: MatDialog,
+  ) {
     super(projectsService);
     this.dataSource = new ApiDataSource<Project>(
       (request, query) => {
@@ -40,7 +45,9 @@ export class ProjectsComponent extends AbstractListComponent<Project> {
         initialSort: { field: 'id', order: 'asc' },
       },
     );
-
   }
 
+  openCreationDialog() {
+    this.dialog.open(ProjectFormComponent);
+  }
 }

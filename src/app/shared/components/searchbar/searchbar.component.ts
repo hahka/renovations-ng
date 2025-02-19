@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
-import {TranslatePipe} from "@ngx-translate/core";
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-searchbar',

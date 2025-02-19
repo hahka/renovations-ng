@@ -8,7 +8,10 @@ export const REDIRECT_TO_PARAM_NAME = 'redirectTo';
   providedIn: 'root',
 })
 export class AuthGuard implements CanMatch {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+  ) {}
 
   canMatch(_: Route, segments: UrlSegment[]): boolean | UrlTree {
     return this.isAuthenticated(segments);
@@ -17,7 +20,7 @@ export class AuthGuard implements CanMatch {
   isAuthenticated(segments: UrlSegment[]): boolean | UrlTree {
     if (!this.authService.accessToken) {
       // always redirect to user's requested page
-      const redirectUrl = segments.map(segment => segment.path).join('/');
+      const redirectUrl = segments.map((segment) => segment.path).join('/');
 
       return this.router.createUrlTree(
         ['signin'],

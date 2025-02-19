@@ -1,5 +1,5 @@
 import { BaseModel } from './api/base.model';
-import {Work} from "./work.model";
+import { Work } from './work.model';
 
 export class Project implements BaseModel {
   id?: string;

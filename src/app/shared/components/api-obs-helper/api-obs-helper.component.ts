@@ -5,13 +5,13 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ApiService } from '../../../core/services/api/api.service';
 import { CommonModule } from '@angular/common';
-import {BaseModelImpls} from "../../../utils/types";
+import { BaseModelImpls } from '../../../utils/types';
 
 @Component({
   selector: 'app-api-obs-helper',
   templateUrl: './api-obs-helper.component.html',
   styleUrls: ['./api-obs-helper.component.scss'],
-  imports: [CommonModule]
+  imports: [CommonModule],
 })
 export class ApiObsHelperComponent<T extends BaseModelImpls> {
   /** The apiService corresponding to the current resource */

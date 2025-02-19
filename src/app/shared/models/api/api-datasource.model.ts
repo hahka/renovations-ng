@@ -33,7 +33,10 @@ export class ApiDataSource<T extends BaseModel> extends DataSource<T> {
 
   private _dataSubscription: Subscription = Subscription.EMPTY;
 
-  constructor(endpoint: PaginatedEndpoint<T, SearchDto>, options: ApiDataSourceOptions<T>) {
+  constructor(
+    endpoint: PaginatedEndpoint<T, SearchDto>,
+    options: ApiDataSourceOptions<T>,
+  ) {
     super();
     const { initialSort, initialQuery } = options;
 
@@ -44,7 +47,12 @@ export class ApiDataSource<T extends BaseModel> extends DataSource<T> {
     this.sort = new BehaviorSubject<Sort<T> | undefined>(this.initialSort);
     this.pageIndex = new BehaviorSubject<number>(0);
 
-    const param$ = combineLatest([this.query, this.sort, this.pageIndex, this.pageSize]);
+    const param$ = combineLatest([
+      this.query,
+      this.sort,
+      this.pageIndex,
+      this.pageSize,
+    ]);
     this.page$ = param$.pipe(
       debounceTime(150),
       switchMap(([query, sort, pageIndex, size]) => {
@@ -62,7 +70,7 @@ export class ApiDataSource<T extends BaseModel> extends DataSource<T> {
 
   /** @inheritdoc */
   connect(): Observable<T[]> {
-    return this.page$.pipe(map(data => data.content)).pipe((s) => {
+    return this.page$.pipe(map((data) => data.content)).pipe((s) => {
       this._dataSubscription.unsubscribe();
       this._dataSubscription = s.subscribe((d) => {
         console.log(d);

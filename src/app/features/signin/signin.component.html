@@ -1,18 +1,34 @@
 <form (ngSubmit)="signIn($event)" [formGroup]="signinForm">
   <mat-form-field>
     <mat-label>Identifiant</mat-label>
-    <input matInput placeholder="pat@example.com" formControlName="emailOrUsername" required />
-    <mat-icon matSuffix matTooltip="Adresse e-mail ou nom d'utilisateur">info</mat-icon>
+    <input
+      matInput
+      placeholder="pat@example.com"
+      formControlName="emailOrUsername"
+      required
+    />
+    <mat-icon matSuffix matTooltip="Adresse e-mail ou nom d'utilisateur"
+      >info</mat-icon
+    >
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Mot de passe</mat-label>
-    <input matInput formControlName="password" [type]="hide() ? 'password' : 'text'" />
-    <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'"
-      [attr.aria-pressed]="hide()">
-      <mat-icon >{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+    <input
+      matInput
+      formControlName="password"
+      [type]="hide() ? 'password' : 'text'"
+    />
+    <button
+      mat-icon-button
+      matSuffix
+      (click)="clickEvent($event)"
+      [attr.aria-label]="'Hide password'"
+      [attr.aria-pressed]="hide()"
+    >
+      <mat-icon>{{ hide() ? "visibility_off" : "visibility" }}</mat-icon>
     </button>
   </mat-form-field>
 
-  <button mat-flat-button type="submit">Me connecter</button> 
+  <button mat-flat-button type="submit">Me connecter</button>
 </form>

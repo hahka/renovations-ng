@@ -3,4 +3,5 @@
   datatableTitle="{{ 'features.projects.title' | translate }}"
   [fullColumns]="fullColumns"
   [showAddButton]="canManage && isOnline"
+  (addButtonClicked)="openCreationDialog()"
 ></app-datatable>

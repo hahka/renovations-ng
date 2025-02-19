@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ApiDataSource } from '../../../models/api/api-datasource.model';
 import { AsyncPipe, NgClass, NgIf } from '@angular/common';
-import {BaseModelImpls} from "../../../../utils/types";
+import { BaseModelImpls } from '../../../../utils/types';
 
 @Component({
   selector: 'app-sort-indicator',

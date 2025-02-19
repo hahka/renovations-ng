@@ -1,4 +1,4 @@
 export enum IdbStoresEnum {
-    PROJECTS = 'projects',
-    WORKS = 'works'
+  PROJECTS = 'projects',
+  WORKS = 'works',
 }

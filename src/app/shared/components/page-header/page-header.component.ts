@@ -7,6 +7,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 
+/**
+ * TODO: clean this component => edition no needed anymore because every update will be in popup or form
+ */
 @Component({
   selector: 'app-page-header',
   imports: [MatIconModule, MatButtonModule, CommonModule, TranslatePipe],
@@ -36,11 +39,6 @@ export class PageHeaderComponent {
   /** Title to be displayed in the header */
   @Input() title = '';
 
-  /** Wether modifications are being made on the form */
-  get readonly(): boolean {
-    return this.control ? this.control.disabled : false;
-  }
-
   /** Wether buttons on the upper right corner should be displayed, mainly if in edit mode */
   get displayCrudBtn(): boolean {
     return !!this.control;
@@ -67,10 +65,11 @@ export class PageHeaderComponent {
 
   /** Handles the buttons' click event */
   onClick(event: PageHeaderAction): void {
-    if ((event === PageHeaderAction.BACK || event === PageHeaderAction.CANCEL) && !this.readonly) {
+    if (event === PageHeaderAction.BACK || event === PageHeaderAction.CANCEL) {
       // TODO: prevent user via popup? (via onDeactivate vs !this.readonly?)
       this.pageHeaderEvent.emit({ action: event });
     } else {
+      // TODO: still relevant?
       this.pageHeaderEvent.emit({ action: event });
     }
   }

@@ -18,20 +18,29 @@
   <ng-container *ngIf="!forList">
     <ng-container *ngTemplateOutlet="buttonsTemplate"></ng-container>
     <div class="buttons-wrapper buttons-wrapper--end" *ngIf="displayCrudBtn">
-      <div *ngIf="readonly && online">
-        <button mat-stroked-button color="primary" (click)="onClick(PageHeaderAction.UPDATE)">
-          {{ 'common.action.update' | translate | titlecase }}
+      <div *ngIf="online">
+        <button
+          mat-stroked-button
+          color="primary"
+          (click)="onClick(PageHeaderAction.UPDATE)"
+        >
+          {{ "common.action.update" | translate | titlecase }}
         </button>
       </div>
-      <div *ngIf="!readonly" class="buttons-container">
+      <div *ngIf="false" class="buttons-container">
+        <!-- TODO: rework for save -->
         <!-- <ng-container *ngIf="displayArchive">
         <button mat-stroked-button color="warn" (click)="onClick(PageHeaderAction.ARCHIVE)">
           {{ isArchived ? 'common.action.unarchive' : ('common.action.archive' | translate) }}
         </button>
       </ng-container> -->
 
-        <button mat-stroked-button color="primary" (click)="onClick(PageHeaderAction.CANCEL)">
-          {{ 'common.action.cancel' | translate | titlecase }}
+        <button
+          mat-stroked-button
+          color="primary"
+          (click)="onClick(PageHeaderAction.CANCEL)"
+        >
+          {{ "common.action.cancel" | translate | titlecase }}
         </button>
         <button
           mat-flat-button
@@ -40,11 +49,13 @@
           [disabled]="(control && !control.valid) || !!isArchived"
           (click)="onClick(PageHeaderAction.SAVE)"
         >
-          {{ 'common.action.save' | translate | titlecase }}
+          {{ "common.action.save" | translate | titlecase }}
         </button>
       </div>
     </div>
   </ng-container>
 
-  <ng-template #buttonsTemplate><ng-content select="[buttons]"></ng-content></ng-template>
+  <ng-template #buttonsTemplate
+    ><ng-content select="[buttons]"></ng-content
+  ></ng-template>
 </div>

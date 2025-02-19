@@ -8,22 +8,22 @@ import { IdbStoresEnum } from '../../../utils/enums';
 import { EnvironmentService } from '../environment/environment.service';
 import { Page, PageRequest } from '.';
 import { SearchDto } from '../../../shared/models/api/search-dto.model';
-import {BaseModelImpls} from "../../../utils/types";
+import { BaseModelImpls } from '../../../utils/types';
 
 export const WINDOW = new InjectionToken<Window>('WindowToken', {
   factory: () => {
     if (typeof window !== 'undefined') {
-      return window
+      return window;
     }
     return new Window(); // does this work?
-  }
+  },
 });
 
 @Injectable({
   providedIn: 'root',
 })
 export abstract class ApiService<
-  T extends BaseModelImpls
+  T extends BaseModelImpls,
 > extends ResourceUrlHelper {
   /** API base endpoint for resource */
   abstract override resource: IdbStoresEnum;
@@ -92,13 +92,18 @@ export abstract class ApiService<
       if (!dataId) {
         apiCall$ = this.httpClient.post<T>(`${this.getFormattedUrl()}`, data);
       } else {
-        apiCall$ = this.httpClient.patch<T>(`${this.getFormattedUrl()}/${dataId}`, data);
+        apiCall$ = this.httpClient.patch<T>(
+          `${this.getFormattedUrl()}/${dataId}`,
+          data,
+        );
       }
 
       return apiCall$.pipe(take(1));
     }
 
-    return from(this.idbService.put(this.resource, data, dataId) as Promise<any>);
+    return from(
+      this.idbService.put(this.resource, data, dataId) as Promise<any>,
+    );
   }
 
   /** Fetches all resources from the API for the given resource */
@@ -115,9 +120,12 @@ export abstract class ApiService<
    * @param pageRequest The parameters to paginate and sort filtered resources
    * @param dto The DTO to filter resources on indexed fields
    */
-  public search(pageRequest: PageRequest<T>, dto: SearchDto): Observable<Page<T>> {
+  public search(
+    pageRequest: PageRequest<T>,
+    dto: SearchDto,
+  ): Observable<Page<T>> {
     if (window.navigator.onLine) {
-      const {sort, ...remaining} = pageRequest;
+      const { sort, ...remaining } = pageRequest;
 
       let params: HttpParams = new HttpParams();
 
@@ -131,17 +139,24 @@ export abstract class ApiService<
       }
 
       return this.httpClient.get<Page<T>>(`${this.getFormattedUrl()}`, {
-        params
+        params,
       });
-
     }
 
     return from(
-      this.idbService.search(this.resource, pageRequest, dto, this.idbSearch) as Promise<any>,
+      this.idbService.search(
+        this.resource,
+        pageRequest,
+        dto,
+        this.idbSearch,
+      ) as Promise<any>,
     );
   }
 
   public canManage() {
-    return window.navigator.onLine || (this.offlineRights && this.offlineRights.manage);
+    return (
+      window.navigator.onLine ||
+      (this.offlineRights && this.offlineRights.manage)
+    );
   }
 }

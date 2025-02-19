@@ -1,5 +1,5 @@
-import { IdbStoresEnum } from "../../../utils/enums";
-import { EnvironmentService } from "../environment/environment.service";
+import { IdbStoresEnum } from '../../../utils/enums';
+import { EnvironmentService } from '../environment/environment.service';
 
 /**
  * This class aims to ease generating api resource's url,
@@ -15,7 +15,8 @@ export abstract class ResourceUrlHelper {
    */
   getFormattedUrl() {
     return (
-      this.environmentService.apiUrl + this.resource.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`)
+      this.environmentService.apiUrl +
+      this.resource.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`)
     );
   }
 }

@@ -19,7 +19,7 @@ export class ApiObsHelperComponent<T extends BaseModelImpls> {
   private _apiService!: ApiService<T>;
 
   /**
-   * This is setted via parent component ngAfterOnInit to prevent passing Input in multiple templates.
+   * This is set via parent component ngAfterOnInit to prevent passing Input in multiple templates.
    * @see {@link ApiObsHelperComponent#_apiService}
    */
   set apiService(apiService: ApiService<T>) {
@@ -96,7 +96,7 @@ export class ApiObsHelperComponent<T extends BaseModelImpls> {
   }
 
   /**
-   * Called on form submit, used to post/patch defect category
+   * Called on form submit, used to post or patch data
    * @param value The new value of the resource
    */
   postOrPatch(value: T): void {

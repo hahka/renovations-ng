@@ -4,6 +4,7 @@ import { IdbStoresEnum } from '../../utils/enums';
 import { Project } from '../../shared/models/project.model';
 import { BaseModelImpls } from '../../utils/types';
 import { Work } from '../../shared/models/work.model';
+import { WorkType } from '../../shared/models/work-type.model';
 
 interface MyDB extends DBSchema {
   // TODO: schema
@@ -14,6 +15,11 @@ interface MyDB extends DBSchema {
   };
   works: {
     value: Work;
+    key: string;
+    indexes: any;
+  };
+  workTypes: {
+    value: WorkType;
     key: string;
     indexes: any;
   };

@@ -124,13 +124,13 @@ export class DatatableComponent<T extends Project> implements OnDestroy {
   /**
    * Sorts the wanted field with the wanted direction, or undefined if no direction (no default sort)
    */
-  onSortChange(active: keyof T & string, direction: 'asc' | 'desc' | ''): void {
+  onSortChange(active: string, direction: 'asc' | 'desc' | ''): void {
     if (this.headerRowOptions && this.headerRowOptions.canSort) {
       if (!direction) {
         this.dataSource?.sortBy(undefined);
       } else {
         this.dataSource?.sortBy({
-          field: active,
+          field: active as keyof T & string,
           order: direction,
         });
       }

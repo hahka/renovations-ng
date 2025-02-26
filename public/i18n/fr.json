@@ -1,11 +1,15 @@
 {
   "common": {
-    "information": "Informations"
+    "information": "Informations",
+    "action": {
+      "update": "Mettre à jour",
+      "create": "Créer"
+    }
   },
   "features": {
     "projects": {
       "title": "Projet",
-      "label": "Titre"
+      "label": "Projet"
     }
   }
 }

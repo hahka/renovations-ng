@@ -1,16 +1,15 @@
 <ng-container *ngIf="detailId$ | async">
-  <app-page-header
-    title="{{ 'features.projects.title' | translate }}"
-    [isArchived]="isArchived"
-    (pageHeaderEvent)="onPageHeaderEvent($event)"
-  ></app-page-header>
-  <mat-card>
-    <ng-container *ngIf="detail$ | async as detail">
+  <ng-container *ngIf="detail$ | async as detail">
+    <app-page-header
+      title="{{ 'features.projects.title' | translate }}"
+      [isArchived]="isArchived"
+      (pageHeaderEvent)="onPageHeaderEvent($event, detail)"
+    ></app-page-header>
+    <mat-card>
       <h3>{{ "common.information" | translate }}</h3>
       <div class="flex flex--row">
         <div>
-          <span>{{ "features.projects.label" | translate }} </span
-          ><span>{{ detail.label }}</span>
+          <span>{{ detail.label }}</span>
         </div>
       </div>
 
@@ -19,10 +18,27 @@
         <span>Date de fin: {{ detail.endDate }}</span>
       </div>
       <mat-divider></mat-divider>
-      <div>{{ "features.projects.works" | translate }}</div>
-      <div *ngFor="let work of detail.works">
-        <span (click)="onRowClick(work)">{{ work.label }}</span>
-      </div>
-    </ng-container>
-  </mat-card>
+      <h3>
+        {{ "features.projects.works" | translate }}
+      </h3>
+      <button
+        mat-icon-button
+        *ngIf="detail.id"
+        (click)="openWorkCreationDialog(detail.id)"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+
+      <ng-container *ngIf="detail.works?.length; else createWorkTemplate">
+        <div *ngFor="let work of detail.works">
+          <span (click)="onRowClick(work)">{{ work.label }}</span>
+        </div>
+      </ng-container>
+      <ng-template #createWorkTemplate>
+        <button *ngIf="detail.id" (click)="openWorkCreationDialog(detail.id)">
+          Créer un chantier
+        </button>
+      </ng-template>
+    </mat-card>
+  </ng-container>
 </ng-container>

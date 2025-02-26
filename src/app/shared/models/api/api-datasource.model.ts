@@ -73,7 +73,6 @@ export class ApiDataSource<T extends BaseModel> extends DataSource<T> {
     return this.page$.pipe(map((data) => data.content)).pipe((s) => {
       this._dataSubscription.unsubscribe();
       this._dataSubscription = s.subscribe((d) => {
-        console.log(d);
         this.data = d;
       });
 

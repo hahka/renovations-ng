@@ -1,5 +1,5 @@
-import { AsyncPipe, Location, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { AsyncPipe, Location, NgIf, TitleCasePipe } from '@angular/common';
+import { Component, Inject } from '@angular/core';
 import { DetailComponent } from '../../../shared/components/detail/detail.component';
 import { Project } from '../../../shared/models/project.model';
 import { ApiObsHelperComponent } from '../../../shared/components/api-obs-helper/api-obs-helper.component';
@@ -14,14 +14,20 @@ import {
 } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatDialogModule } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
+import { AbstractFormComponent } from '../../../shared/components/abstract-form/abstract-form.component';
+import { MatButton } from '@angular/material/button';
+import { PageHeaderAction } from '../../../shared/components/page-header/page-header-action.enum';
 
 @Component({
   selector: 'app-project-form',
   imports: [
     ApiObsHelperComponent,
     NgIf,
-    AsyncPipe,
     ReactiveFormsModule,
     MatInputModule,
     TranslatePipe,
@@ -30,33 +36,45 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatError,
     MatDatepickerModule,
     MatDialogModule,
+    MatButton,
+    TitleCasePipe,
   ],
   templateUrl: './project-form.component.html',
   styleUrl: './project-form.component.scss',
 })
-export class ProjectFormComponent extends DetailComponent<Project> {
+export class ProjectFormComponent extends AbstractFormComponent<Project> {
+  override infoPageBaseUrl = 'projects';
+
   override newData(): Project {
-    console.log('new Data');
     return new Project();
   }
+
   override getFormattedData(): Project {
     return new Project(this.form.value);
   }
 
+  createOrUpdate = 'create';
+  detail: Project = this.newData();
+
   constructor(
     public formBuilder: FormBuilder,
+    @Inject(MatDialogRef) matDialogRef: MatDialogRef<Project>,
+    @Inject(MAT_DIALOG_DATA) data: Project,
     activatedRoute: ActivatedRoute,
     projectsService: ProjectsService,
     location: Location,
     router: Router,
   ) {
-    super(activatedRoute, projectsService, location, router);
+    super(matDialogRef, activatedRoute, projectsService, location, router);
 
+    this.createOrUpdate = !!data?.id ? 'update' : 'create';
     this.form = this.formBuilder.group({
-      id: [''],
-      label: ['', Validators.required],
-      startDate: ['', Validators.required],
-      endDate: [''],
+      id: [data?.id],
+      label: [data?.label, Validators.required],
+      startDate: [data?.startDate, Validators.required],
+      endDate: [data?.endDate],
     });
   }
+
+  protected readonly PageHeaderAction = PageHeaderAction;
 }

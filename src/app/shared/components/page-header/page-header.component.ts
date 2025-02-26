@@ -41,7 +41,8 @@ export class PageHeaderComponent {
 
   /** Wether buttons on the upper right corner should be displayed, mainly if in edit mode */
   get displayCrudBtn(): boolean {
-    return !!this.control;
+    return true; // TODO: clean
+    // return !!this.control;
   }
 
   get displayArchive(): boolean {

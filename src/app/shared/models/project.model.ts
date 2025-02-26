@@ -9,7 +9,6 @@ export class Project implements BaseModel {
   works: Work[] = [];
 
   constructor(obj?: Project) {
-    console.log(obj);
     Object.assign(this, obj);
   }
 

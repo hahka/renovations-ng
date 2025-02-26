@@ -1,15 +1,6 @@
 // TODO: mixin?
 @use "../../../shared/components/detail/detail.component.scss";
 
-form {
-  display: flex;
-
-  .dates {
-    display: flex;
-    flex-direction: row;
-
-    > * {
-      margin: auto;
-    }
-  }
+button[type=submit] {
+  float: right;
 }

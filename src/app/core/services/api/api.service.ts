@@ -82,9 +82,10 @@ export abstract class ApiService<
 
   /**
    * Posts or patches a resource via API
-   * @param data The data to patch
+   * @param _data The data to patch
    */
-  public postOrPatch(data: T): Observable<T> {
+  public postOrPatch(_data: T): Observable<T> {
+    const data = { ..._data };
     const dataId = data.id;
     delete data.id;
     if (window.navigator.onLine) {

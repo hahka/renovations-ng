@@ -73,10 +73,10 @@ export abstract class AbstractInformationComponent<T extends BaseModelImpls>
   onPageHeaderEvent(pageHeaderEvent: PageHeaderEvent, data: T): void {
     switch (pageHeaderEvent.action) {
       case PageHeaderAction.BACK:
-        this.location.back();
+        this.locationService.back();
         break;
       case PageHeaderAction.CANCEL:
-        this.location.back();
+        this.locationService.back();
         break;
       case PageHeaderAction.ARCHIVE:
         this.archive();

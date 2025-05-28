@@ -2,6 +2,8 @@ import { ApiService } from '../../../core/services/api/api.service';
 import { ApiDataSource } from '../../models/api/api-datasource.model';
 import { Project } from '../../models/project.model';
 import { FullColumn } from '../../models/full-column.model';
+import { WindowService } from '../../../core/services/window.service';
+import { inject } from '@angular/core';
 
 export abstract class AbstractListComponent<T extends Project> {
   /** DataSource that will be used to display data and centralize communication between app and api */
@@ -17,8 +19,10 @@ export abstract class AbstractListComponent<T extends Project> {
 
   isOnline: boolean;
 
+  windowService = inject(WindowService);
+
   constructor(private readonly apiService: ApiService<T>) {
     this.canManage = this.apiService.canManage();
-    this.isOnline = navigator.onLine;
+    this.isOnline = this.windowService.navigator.onLine;
   }
 }

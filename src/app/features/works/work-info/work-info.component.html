@@ -1,7 +1,7 @@
 <ng-container *ngIf="detailId$ | async">
   <ng-container *ngIf="detail$ | async as detail">
     <app-page-header
-      title="{{ 'features.projects.singular' | translate }}"
+      title="{{ 'features.works.singular' | translate }}"
       [isArchived]="isArchived"
       (pageHeaderEvent)="onPageHeaderEvent($event, detail)"
     ></app-page-header>
@@ -18,26 +18,6 @@
           <div class="flex flex--row">
             <span>Date de début: {{ detail.startDate }}</span>
             <span>Date de fin: {{ detail.endDate }}</span>
-          </div>
-        </div>
-        <mat-divider [vertical]="true"></mat-divider>
-        <div>
-          <h3>
-            {{ "features.projects.works" | translate }}
-          </h3>
-          <div class="works-grid">
-            <div (click)="onRowClick(work)" *ngFor="let work of detail.works">
-              <span>{{ work.label }}</span>
-              <br />
-              <span>{{ work.workType?.label }}</span>
-            </div>
-            <button
-              mat-stroked-button
-              *ngIf="detail.id"
-              (click)="openWorkCreationDialog(detail.id)"
-            >
-              {{ "features.works.create" | translate }}
-            </button>
           </div>
         </div>
       </div>

@@ -14,7 +14,7 @@ html {
       density: 0,
     )
   );
-} /* You can add global styles to this file, and also import other style files */
+}
 
 html,
 body {
@@ -34,6 +34,10 @@ app-root {
 .flex {
   display: flex;
 
+  &--1 {
+    flex: 1;
+  }
+
   &--row {
     flex-direction: row;
 
@@ -45,8 +49,25 @@ app-root {
       }
     }
   }
+  &--column {
+    flex-direction: column;
+
+    & > * {
+      flex: 1;
+
+      &:not(:last-child) {
+        margin-bottom: 20px;
+      }
+    }
+  }
 
   &--column {
     flex-direction: column;
+  }
+}
+
+.flex {
+  mat-divider {
+    flex: 0;
   }
 }

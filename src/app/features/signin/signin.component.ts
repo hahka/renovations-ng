@@ -14,7 +14,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { tap } from 'rxjs';
 import { AuthService } from '../../core/services/api/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { REDIRECT_TO_PARAM_NAME } from '../../core/auth.guard';
+
+export const REDIRECT_TO_PARAM_NAME = 'redirectTo';
 
 @Component({
   selector: 'app-signin',
@@ -67,17 +68,5 @@ export class SigninComponent {
       )
       .subscribe();
     return;
-    //______
-    /*if (this.signinForm.valid) {
-      const signin = this.signinForm.value;
-      // TODO: hash paswword before send?
-      if (signin.emailOrUsername && signin.password) {
-        this.authService.signin(signin.emailOrUsername, signin.password).pipe(
-          tap(() => {
-            this.router.navigate([this.redirectTo || ""]);
-          })
-        ).subscribe();
-      }
-    }*/
   }
 }

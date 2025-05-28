@@ -1,4 +1,4 @@
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
   AfterViewInit,
@@ -15,6 +15,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BaseModelImpls } from '../../../utils/types';
+import { LocationService } from '../../../core/services/location.service';
 
 @Component({
   template: '',
@@ -57,7 +58,7 @@ export abstract class DetailComponent<T extends BaseModelImpls>
   constructor(
     protected readonly activatedRoute: ActivatedRoute,
     protected readonly apiService: ApiService<T>,
-    protected readonly location: Location,
+    protected readonly locationService: LocationService,
     protected readonly router: Router,
   ) {}
 

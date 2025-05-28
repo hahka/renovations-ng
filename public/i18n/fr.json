@@ -4,12 +4,20 @@
     "action": {
       "update": "Mettre à jour",
       "create": "Créer"
-    }
+    },
+    "search": "Rechercher..."
   },
   "features": {
     "projects": {
-      "title": "Projet",
-      "label": "Projet"
+      "plural": "Projets",
+      "singular": "Projet",
+      "label": "Projet",
+      "works": "Chantiers"
+    },
+    "works": {
+      "plural": "Chantiers",
+      "singular": "Chantier",
+      "create": "Créer un chantier"
     }
   }
 }

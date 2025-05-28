@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AsyncPipe, Location, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
 import { MatInputModule } from '@angular/material/input';
@@ -17,8 +17,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ProjectFormComponent } from '../project-form/project-form.component';
 import { tap } from 'rxjs';
 import { WorkFormComponent } from '../../works/work-form/work-form.component';
-import { MatIconButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
+import { MatButton } from '@angular/material/button';
+import { LocationService } from '../../../core/services/location.service';
 
 @Component({
   selector: 'app-project-info',
@@ -34,8 +34,7 @@ import { MatIcon } from '@angular/material/icon';
     MatDatepickerModule,
     NgFor,
     MatDivider,
-    MatIcon,
-    MatIconButton,
+    MatButton,
   ],
   templateUrl: './project-info.component.html',
   styleUrl: './project-info.component.scss',
@@ -53,10 +52,10 @@ export class ProjectInfoComponent extends AbstractInformationComponent<Project> 
     public matDialog: MatDialog,
     activatedRoute: ActivatedRoute,
     projectsService: ProjectsService,
-    location: Location,
+    locationService: LocationService,
     router: Router,
   ) {
-    super(activatedRoute, projectsService, location, router);
+    super(activatedRoute, projectsService, locationService, router);
   }
 
   onRowClick(row: BaseModel): void {

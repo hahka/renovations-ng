@@ -3,8 +3,8 @@ import { BaseModelImpls } from '../../../utils/types';
 import { DetailComponent } from '../detail/detail.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../../core/services/api/api.service';
-import { Location } from '@angular/common';
 import { MatDialogRef } from '@angular/material/dialog';
+import { LocationService } from '../../../core/services/location.service';
 
 @Component({
   template: '',
@@ -25,10 +25,10 @@ export abstract class AbstractFormComponent<
     @Inject(MatDialogRef) public matDialogRef: MatDialogRef<any>,
     activatedRoute: ActivatedRoute,
     apiService: ApiService<T>,
-    location: Location,
+    locationService: LocationService,
     router: Router,
   ) {
-    super(activatedRoute, apiService, location, router);
+    super(activatedRoute, apiService, locationService, router);
   }
 
   /** Called on form submit, used to post/patch defect category */

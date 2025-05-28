@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { PageHeaderAction } from './page-header-action.enum';
 import { PageHeaderEvent } from './page-header-event.interface';
@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
+import { WindowService } from '../../../core/services/window.service';
 
 /**
  * TODO: clean this component => edition no needed anymore because every update will be in popup or form
@@ -39,6 +40,8 @@ export class PageHeaderComponent {
   /** Title to be displayed in the header */
   @Input() title = '';
 
+  windowService = inject(WindowService);
+
   /** Wether buttons on the upper right corner should be displayed, mainly if in edit mode */
   get displayCrudBtn(): boolean {
     return true; // TODO: clean
@@ -61,7 +64,7 @@ export class PageHeaderComponent {
   online: boolean;
 
   constructor() {
-    this.online = navigator.onLine;
+    this.online = this.windowService.navigator.onLine;
   }
 
   /** Handles the buttons' click event */

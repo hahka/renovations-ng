@@ -22,7 +22,7 @@ export class ProjectsComponent extends AbstractListComponent<Project> {
   fullColumns: FullColumn<Project>[] = [
     {
       field: 'label',
-      label: 'common.label',
+      label: 'features.projects.label',
       type: ColumnType.string,
     },
   ];

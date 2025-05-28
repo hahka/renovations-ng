@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { inject, Injectable, InjectionToken } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { IdbService } from '../idb.service';
@@ -9,15 +9,7 @@ import { EnvironmentService } from '../environment/environment.service';
 import { Page, PageRequest } from '.';
 import { SearchDto } from '../../../shared/models/api/search-dto.model';
 import { BaseModelImpls } from '../../../utils/types';
-
-export const WINDOW = new InjectionToken<Window>('WindowToken', {
-  factory: () => {
-    if (typeof window !== 'undefined') {
-      return window;
-    }
-    return new Window(); // does this work?
-  },
-});
+import { WindowService } from '../window.service';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +25,7 @@ export abstract class ApiService<
     manage: boolean;
   };
 
-  private window = inject(WINDOW);
+  readonly windowService = inject(WindowService);
 
   constructor(
     protected override readonly environmentService: EnvironmentService,
@@ -73,7 +65,7 @@ export abstract class ApiService<
    * @param id Id of the wanted resource
    */
   getById(id: string): Observable<T> {
-    if (this.window.navigator.onLine) {
+    if (this.windowService.navigator.onLine) {
       return this.httpClient.get<T>(`${this.getFormattedUrl()}/${id}`);
     }
 
@@ -88,7 +80,7 @@ export abstract class ApiService<
     const data = { ..._data };
     const dataId = data.id;
     delete data.id;
-    if (window.navigator.onLine) {
+    if (this.windowService.navigator.onLine) {
       let apiCall$: Observable<T>;
       if (!dataId) {
         apiCall$ = this.httpClient.post<T>(`${this.getFormattedUrl()}`, data);
@@ -109,7 +101,7 @@ export abstract class ApiService<
 
   /** Fetches all resources from the API for the given resource */
   public getAll(): Observable<T[]> {
-    if (this.window.navigator.onLine) {
+    if (this.windowService.navigator.onLine) {
       return this.httpClient.get<T[]>(`${this.getFormattedUrl()}`);
     }
 
@@ -125,7 +117,8 @@ export abstract class ApiService<
     pageRequest: PageRequest<T>,
     dto: SearchDto,
   ): Observable<Page<T>> {
-    if (window.navigator.onLine) {
+    console.log(this.windowService.navigator.onLine);
+    if (this.windowService.navigator.onLine) {
       const { sort, ...remaining } = pageRequest;
 
       let params: HttpParams = new HttpParams();
@@ -139,9 +132,12 @@ export abstract class ApiService<
         params = params.append('sort', sort.field + ',' + sort.order);
       }
 
+      /*
       return this.httpClient.get<Page<T>>(`${this.getFormattedUrl()}`, {
         params,
       });
+      */
+      return this.httpClient.get<Page<T>>(`${this.getFormattedUrl()}`);
     }
 
     return from(
@@ -156,7 +152,7 @@ export abstract class ApiService<
 
   public canManage() {
     return (
-      window.navigator.onLine ||
+      this.windowService.navigator.onLine ||
       (this.offlineRights && this.offlineRights.manage)
     );
   }

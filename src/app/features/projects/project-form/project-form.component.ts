@@ -1,6 +1,5 @@
-import { AsyncPipe, Location, NgIf, TitleCasePipe } from '@angular/common';
+import { NgIf, TitleCasePipe } from '@angular/common';
 import { Component, Inject } from '@angular/core';
-import { DetailComponent } from '../../../shared/components/detail/detail.component';
 import { Project } from '../../../shared/models/project.model';
 import { ApiObsHelperComponent } from '../../../shared/components/api-obs-helper/api-obs-helper.component';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -22,6 +21,7 @@ import {
 import { AbstractFormComponent } from '../../../shared/components/abstract-form/abstract-form.component';
 import { MatButton } from '@angular/material/button';
 import { PageHeaderAction } from '../../../shared/components/page-header/page-header-action.enum';
+import { LocationService } from '../../../core/services/location.service';
 
 @Component({
   selector: 'app-project-form',
@@ -62,10 +62,16 @@ export class ProjectFormComponent extends AbstractFormComponent<Project> {
     @Inject(MAT_DIALOG_DATA) data: Project,
     activatedRoute: ActivatedRoute,
     projectsService: ProjectsService,
-    location: Location,
+    locationService: LocationService,
     router: Router,
   ) {
-    super(matDialogRef, activatedRoute, projectsService, location, router);
+    super(
+      matDialogRef,
+      activatedRoute,
+      projectsService,
+      locationService,
+      router,
+    );
 
     this.createOrUpdate = !!data?.id ? 'update' : 'create';
     this.form = this.formBuilder.group({

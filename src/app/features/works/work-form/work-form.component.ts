@@ -1,7 +1,7 @@
 import { Component, Inject, Signal } from '@angular/core';
 import { Work } from '../../../shared/models/work.model';
 import { ApiObsHelperComponent } from '../../../shared/components/api-obs-helper/api-obs-helper.component';
-import { Location, NgIf, TitleCasePipe } from '@angular/common';
+import { NgIf, TitleCasePipe } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -23,6 +23,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { WorkTypesService } from '../../../core/services/api/work-types.service';
 import { WorkType } from '../../../shared/models/work-type.model';
 import { MatOption, MatSelectModule } from '@angular/material/select';
+import { LocationService } from '../../../core/services/location.service';
 
 @Component({
   selector: 'app-work-form',
@@ -68,18 +69,19 @@ export class WorkFormComponent extends AbstractFormComponent<Work> {
     @Inject(MAT_DIALOG_DATA) data: Work,
     worksService: WorksService,
     activatedRoute: ActivatedRoute,
-    location: Location,
+    locationService: LocationService,
     router: Router,
   ) {
-    super(matDialogRef, activatedRoute, worksService, location, router);
+    super(matDialogRef, activatedRoute, worksService, locationService, router);
 
     this.workTypes = workTypesService.workTypes;
 
+    this.createOrUpdate = !!data?.id ? 'update' : 'create';
     this.form = this.formBuilder.group({
-      id: [''],
-      label: ['', Validators.required],
-      startDate: ['', Validators.required],
-      endDate: [''],
+      id: [data?.id],
+      label: [data?.label, Validators.required],
+      startDate: [data?.startDate, Validators.required],
+      endDate: [data?.endDate],
       parentProject: [{ id: data?.parentProject?.id }],
       workType: [{ id: data?.workType?.id }], // TODO: handle this via dialog
     });

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { DateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-root',
@@ -9,9 +10,14 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  constructor(private translateService: TranslateService) {
+  constructor(
+    private readonly translateService: TranslateService,
+    private readonly dateAdapter: DateAdapter<unknown, unknown>,
+  ) {
     this.translateService.addLangs(['en', 'fr']);
     this.translateService.setDefaultLang('fr');
     this.translateService.use('fr');
+
+    this.dateAdapter.setLocale('fr');
   }
 }

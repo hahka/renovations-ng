@@ -16,6 +16,9 @@ jobs:
       - name: Set up LFTP
         run: sudo apt-get install -y lftp
 
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
       - name: Build prod
         run: yarn run build --c=production
 

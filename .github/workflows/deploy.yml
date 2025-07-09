@@ -17,7 +17,7 @@ jobs:
         run: sudo apt-get install -y lftp
 
       - name: Build prod
-        run: yarn run build-cd:production
+        run: yarn run build --c=production
 
       - name: Deploy to FTP
         run: |

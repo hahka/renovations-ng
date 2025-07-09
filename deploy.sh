@@ -20,6 +20,6 @@ echo "REMOTE_DIR: $REMOTE_DIR"
 lftp -d -c "
 set ssl:verify-certificate no;
 open -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST;
-mirror -R --verbose --only-newer --parallel=10 $LOCAL_DIR $REMOTE_DIR;
+mirror -R --verbose --only-newer --parallel=10 --exclude-glob *.map $LOCAL_DIR $REMOTE_DIR;
 bye;
 "

@@ -16,7 +16,10 @@ jobs:
       - name: Set up LFTP
         run: sudo apt-get install -y lftp
 
+      - name: Build prod
+        run: yarn run build-cd:production
+
       - name: Deploy to FTP
         run: |
           chmod +x deploy.sh
-          ./deploy.sh ${{ secrets.FTP_HOST }} ${{ secrets.FTP_USERNAME }} ${{ secrets.FTP_PASSWORD }} ./ /sites/thibautvirolle.fr
+          ./deploy.sh ${{ secrets.FTP_HOST }} ${{ secrets.FTP_USERNAME }} ${{ secrets.FTP_PASSWORD }} ./dist/renovations-ng /sites/thibautvirolle.fr

@@ -29,10 +29,7 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.scss",
-              { "input": "src/styles/tokens.scss", "inject": false }
-            ],
+            "styles": ["src/styles.scss", "src/styles/tokens.scss"],
             "scripts": [],
             "server": "src/main.server.ts",
             "outputMode": "server",

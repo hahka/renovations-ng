@@ -1,6 +1,7 @@
 {
   "name": "renovations-ng",
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "ng": "ng",
     "build": "node --max_old_space_size=5048 ./node_modules/@angular/cli/bin/ng build",
